@@ -1,6 +1,6 @@
 class Soil{
 	public:
-		Soil();
+		Soil(){};
 		Soil(int m){
 			moisture = m;
 		}

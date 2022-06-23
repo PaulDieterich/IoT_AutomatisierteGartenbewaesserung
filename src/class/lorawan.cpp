@@ -41,18 +41,19 @@ void Lorawan::send(String message){
     //uint8_t confirm, uint8_t nbtrials, size_t length,String data
     LoRaWAN.sendMsg(1, 15,message.length(),message);
 }
-void Lorawan::send(int message){
+/*void Lorawan::send(int message){
   std::stringstream ss;
   ss << message;
   String message_to_send = String(ss.str().c_str());
   send(message_to_send);
-}
+}*/
 
 String Lorawan::receive(){
-response = LoRaWAN.receiveMsg();
+    response = LoRaWAN.receiveMsg();
     if (response != "") {
         Serial.println("Received: ");
         Serial.println(response);
         return response;
     }
+    return "";
 }
