@@ -1,17 +1,19 @@
-//#include <Arduino.h>
+#include <Arduino.h>
 #include <M5Stack.h>
 //#include <M5LoRa.h>
 #include <WiFi.h>
 #include "class/soil.h"
 #include "class/lorawan.h"
+#include "class/pump.h"
 #include "settings.h"
-
-#define MOISTURE_SENSOR_PIN 36
-#define PUMP_PIN 35
-double soil_moisture;
+//#include "UNIT_LoRaWAN.h"
+int rawADC;
+UNIT_LoRaWAN LoRaWAN;
+String massage;
 String response;
 Lorawan* lora = new Lorawan(); // my own LoraWAN class
 Soil* soil = new Soil(); // my own Soil class
+Pump *pump = new Pump(); // my own Pump class
 
 void connectWiFi(){
   WiFi.begin(SSID,PASSWORD);
@@ -19,8 +21,7 @@ void connectWiFi(){
     delay(500);
     Serial.print(".");
   }
-  Serial.printf("WiFi Connected: %s",WiFi.localIP().toString());
- 
+  Serial.printf("WiFi Connected: %s/n",WiFi.localIP().toString());
 }
 
 void setToSleep(){
@@ -32,20 +33,44 @@ void setToSleep(){
   //M5.Power.deepSleep(5);
 }
 
-
 void setup() {
  M5.begin();
  M5.Power.begin();
- connectWiFi();
- lora->setUpLoRaWAN(response);
+ M5.Lcd.begin();
+ M5.Lcd.wakeup();
+lora->setUpLoRaWAN(response);
+pinMode(INPUT_PIN, INPUT);
+pinMode(PUMP_PIN, OUTPUT); 
+pinMode(MOISTURE_SENSOR_PIN, OUTPUT);
+digitalWrite(MOISTURE_SENSOR_PIN, 0);
+}
+void PumpIsNeeded(){
+  //soil mousture is low
+  if(soil->getMoisture() < MOISTURE_MINIMUM){
+    //pump is not on
+    if(!pump->isPumpOn()){
+     // pump->start();
+      Serial.println("Pump Start");
+    }
+  //soil moisture is high
+  }if(soil->getMoisture() > MOISTURE_MAXIMUM){
+    //pump is on
+    if(pump->isPumpOn()){
+ //     pump->stop();
+   Serial.println("Pump Stop");
+    }
+  }
 }
 
 void loop() {
-  M5.Lcd.printf("Hello World!");
-  soil_moisture = analogRead(MOISTURE_SENSOR_PIN);
-  soil->setMoisture(soil_moisture);
-  Serial.printf("Soil moisture: %f\n", soil_moisture);
-  lora->send("soil.getMoisture()");
-  response = lora->receive();
-  setToSleep();
+
+    rawADC = analogRead(INPUT_PIN);
+    soil->setMoisture(rawADC);
+    //PumpIsNeeded(); 
+    Serial.printf("Massage String: %s\n", soil->getMoistureString().c_str());
+    lora->send(soil->getMoistureString());
+    response = lora->receive();
+    delay(1000);
+
+  //setToSleep();
 }
