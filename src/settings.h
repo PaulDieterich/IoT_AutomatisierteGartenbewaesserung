@@ -8,9 +8,21 @@
 *  Siehe src/passwd_example.h
 */
 #include "passwd.h"
+    
+//set Pins
+#define MOISTURE_SENSOR_PIN 25
+#define PUMP_PIN 26
+#define INPUT_PIN 36
+
+//set Moisture Sensor Threshold
+#define MOISTURE_MINIMUM 1500 //soil is dry af
+#define MOISTURE_MAXIMUM 3000 //soil is wet
 
 
-#define DEBUG 1
+//debugging
+#define DEBUG 0
+
+
 
 
 //api call in c++
