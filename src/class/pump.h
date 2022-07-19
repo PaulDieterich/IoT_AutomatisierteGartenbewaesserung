@@ -1,10 +1,18 @@
+#include "M5Stack.h"
+#include "settings.h"
+
 class Pump{
     public:
         Pump();
-        void start();
-        void stop();
+        bool start();
+        bool stop();
+        
         void setPumpDuration(int duration);
-    private:
+        bool isPumpOn(){
+            return is_pump_on;
+        };
+    private: 
+        bool is_pump_on = false;
         int duration;
 };
 

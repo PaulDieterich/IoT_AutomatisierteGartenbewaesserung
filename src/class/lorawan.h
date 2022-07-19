@@ -6,11 +6,14 @@ class Lorawan {
      public:
         void setUpLoRaWAN(String &response);
         void send(String message);
-       // void send(int message);
+        void send(int message);
         String receive();
+        UNIT_LoRaWAN getUNIT(){
+            return loRaWAN;
+        }
     private:
-        UNIT_LoRaWAN LoRaWAN;
+        UNIT_LoRaWAN loRaWAN;
         String response;
         String message;
-        String message_to_send;
+        String outgoing;
 };

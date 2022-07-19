@@ -1,3 +1,6 @@
+#include "M5Stack.h"
+
+
 class Soil{
 	public:
 		Soil(){};
@@ -10,6 +13,7 @@ class Soil{
 		}
 
 		int getMoisture(){return moisture;}
+		String getMoistureString();
 		void setMoisture(int m){moisture = m;}
 
 		int getHeat(){return heat;}
