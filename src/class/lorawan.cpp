@@ -1,5 +1,4 @@
 #include "lorawan.h"
-
 //https://github.com/m5stack/ATOM_DTU_LoRaWAN/blob/master/examples/LoRaWAN_OTAA/LoRaWAN_OTAA.ino
 void Lorawan::setUpLoRaWAN(String &response){
  loRaWAN.Init(&Serial2, 16, 17);
@@ -45,16 +44,19 @@ void Lorawan::setUpLoRaWAN(String &response){
 }
 
 void Lorawan::send(String message){
+    //String encoded = base64::encode(message)
     //uint8_t confirm, uint8_t nbtrials, size_t length,String data
     Serial.printf("Sending Message: %s\n", message.c_str());
-    loRaWAN.sendMsg(1, 7,message.length(),message);
-
-
+    loRaWAN.sendMsg(1, 7,message.length(),message.c_str());
 }
-void Lorawan::send(int message){
-  char message_string[10];
-  sprintf(message_string, "%d", message);
-  send(*message_string);
+
+void Lorawan::send(int message,int status,int battery){
+    String hex_message = String(message, HEX);
+    String hex_status = String(status, HEX); 
+    String hex_battery = String(battery, HEX);
+    payload = hex_message + "0"+ hex_status + hex_battery;
+    loRaWAN.sendMsg(1, 7,8,payload);
+    Serial.printf("Sending Message: %s\n",payload);
 }
 
 String Lorawan::receive(){

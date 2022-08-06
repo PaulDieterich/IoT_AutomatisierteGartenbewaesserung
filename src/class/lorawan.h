@@ -1,12 +1,12 @@
 #include "UNIT_LoRaWAN.h"
 //#include <sstream>
-
 #include "settings.h"
+
 class Lorawan {
      public:
         void setUpLoRaWAN(String &response);
         void send(String message);
-        void send(int message);
+        void send(int message, int pumpOn,int battery);
         String receive();
         UNIT_LoRaWAN getUNIT(){
             return loRaWAN;
@@ -15,5 +15,5 @@ class Lorawan {
         UNIT_LoRaWAN loRaWAN;
         String response;
         String message;
-        String outgoing;
+        String payload;
 };
