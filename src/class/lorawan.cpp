@@ -39,18 +39,12 @@ void Lorawan::setUpLoRaWAN(String &response){
     Serial.println("Start Join.....");
     while (!loRaWAN.checkJoinStatus()) {
         delay(100);
-    };
+    }
     Serial.println("Join success.....");
+    
 }
 
-void Lorawan::send(String message){
-    //String encoded = base64::encode(message)
-    //uint8_t confirm, uint8_t nbtrials, size_t length,String data
-    Serial.printf("Sending Message: %s\n", message.c_str());
-    loRaWAN.sendMsg(1, 7,message.length(),message.c_str());
-}
-
-void Lorawan::send(int message,int status,int battery){
+void Lorawan::send(int message,int status,uint8_t battery){
     String hex_message = String(message, HEX);
     String hex_status = String(status, HEX); 
     String hex_battery = String(battery, HEX);

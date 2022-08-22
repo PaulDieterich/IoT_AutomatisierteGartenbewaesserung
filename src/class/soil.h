@@ -23,8 +23,3 @@ class Soil{
 		int moisture; 
 		int heat;
 };
-//hGEVQyvGS-5WdjJXDp1uYWRtp2AcU0FqDeRU_LO1xZP1GlXHoEXmvlpm-4szVcRF1T06lyOwfkqNQVohK6tKMg==
-
-//export INFLUX_TOKEN=rw8zv9CUYvwqih8NB12PcpFUNFy09pWoERYQBuRAlnAMgLn5yZJ2wK_kFjBOszPSh4WuGdr8CSIdwlxYY9sGbQ==
-
-//telegraf --config https://us-east-1-1.aws.cloud2.influxdata.com/api/v2/telegrafs/09bbfb892bccb000

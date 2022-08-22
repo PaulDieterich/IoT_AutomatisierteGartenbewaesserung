@@ -5,8 +5,7 @@
 class Lorawan {
      public:
         void setUpLoRaWAN(String &response);
-        void send(String message);
-        void send(int message, int pumpOn,int battery);
+        void send(int message, int pumpOn,uint8_t battery);
         String receive();
         UNIT_LoRaWAN getUNIT(){
             return loRaWAN;
