@@ -1,17 +1,19 @@
 #include "lorawan.h"
 //https://github.com/m5stack/ATOM_DTU_LoRaWAN/blob/master/examples/LoRaWAN_OTAA/LoRaWAN_OTAA.ino
+//https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/unit/lorawan/ASR650X%20AT%20Command%20Introduction-20190605.pdf
 void Lorawan::setUpLoRaWAN(String &response){
  loRaWAN.Init(&Serial2, 16, 17);
     Serial.println("Module Connect.....");
     while (!loRaWAN.checkDeviceConnect())
         ;
     Serial.println("Module Connected");
+    //MAC SetUP Command AT+CRESTORE - Restore to Default Configuration
     loRaWAN.writeCMD("AT+CRESTORE\r\n");
-    // Disable Log Information
+    // AT+ILOGLVL - set Log Level; 0 = Disable Log Information; 1 = Enable Log Information
     loRaWAN.writeCMD("AT+ILOGLVL=0\r\n");
-    // Enable  Log Information
-    // LoRaWAN.writeCMD("AT+ILOGLVL=5\r\n");
+    // AT+CSAVE - Save Configuration
     loRaWAN.writeCMD("AT+CSAVE\r\n");
+    // AT+IREBOOT - Reboot
     loRaWAN.writeCMD("AT+IREBOOT=0\r\n");
     delay(1000);
     while (!loRaWAN.checkDeviceConnect())
@@ -23,8 +25,8 @@ void Lorawan::setUpLoRaWAN(String &response){
     Serial.println(response);
 
     // Set Class Mode
-    loRaWAN.setClass("2");
-
+    loRaWAN.setClass("1");
+    // AT+CWORKMODE
     loRaWAN.writeCMD("AT+CWORKMODE=2\r\n");
 
     // LoRaWAN868
