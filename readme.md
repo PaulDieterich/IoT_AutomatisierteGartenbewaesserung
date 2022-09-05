@@ -3,6 +3,8 @@ Dieses Projekt ist im Modul IoT/Industie 4.0 im 4 Fachsemester der Hochschule os
 
 Hier im Repo nur die Implementation für den M5Stack 
 
+zum nachbauen muss in die passwd_example.h 
+DEVICE_EUI, APP_EUI und APP_KEY eingetragen werden die man bekommen wenn man das LoRaWAN modul im TheThingsNetwork regestiert. 
 
 ### Hardware 
  - M5StackCore
