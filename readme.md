@@ -18,7 +18,6 @@ DEVICE_EUI, APP_EUI und APP_KEY eingetragen werden die man bekommen wenn man das
    - Grafana
 
 
-
 #### Bilder
 ##### Garten
 ![Garten Bild 1](/images/garten_1.jpg  "")
